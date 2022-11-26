@@ -28,4 +28,20 @@ public class PercentEncodingTest
     var expected = new byte[] { 0xE2, 0x80, 0xBD, 0x25, 0x2E };
     Assert.Equal(expected, PercentEncoding.PercentDecode(input));
   }
+
+  [Fact]
+  public void PercentDecode_String_EndPercent()
+  {
+    var input = "‽%25%2E%";
+    var expected = new byte[] { 0xE2, 0x80, 0xBD, 0x25, 0x2E, 0x25 };
+    Assert.Equal(expected, PercentEncoding.PercentDecode(input));
+  }
+
+  [Fact]
+  public void PercentEncodeAfterEncoding_Yen()
+  {
+    var input = "Say what?";
+    var expected = "Say%20what?";
+    Assert.Equal(expected, PercentEncoding.PercentEncodeAfterEncoding(Encoding.UTF8, input, Encoding.UTF8));
+  }
 }
